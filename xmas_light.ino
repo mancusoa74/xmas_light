@@ -9,11 +9,10 @@
 #define REMOTEXY_SERVER_PORT 6377 
 
 // Led Strip config 
-#define PIN 2
+#define PIN D2
 #define LEDS 50
 
-int last_select = -1;
-
+int last_select = 0;
 
 // RemoteXY configurate   
 #pragma pack(push, 1) 
@@ -40,7 +39,6 @@ struct {
 #pragma pack(pop) 
 
 
-
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(LEDS, PIN, NEO_RGB + NEO_KHZ800);
 
 uint32_t random_color() {
@@ -59,52 +57,9 @@ void setup() {
   strip.show(); // Initialize all pixels to 'off'
 }
 
-void loop() {
-  for(int i = 0; i< 50; i++)
-    RemoteXY_Handler (); 
-
-  if (RemoteXY.connect_flag) {
-        
-      last_select = RemoteXY.select_1;
-      Serial.println(last_select);
-    
-      switch(last_select) {
-        
-        case 0:
-          luci_off();
-          break;
-        case 1:
-          supercar(20);
-          break;
-        case 2:
-          onexone(20);
-          break;
-        case 3:
-          curtain(20);
-          break;
-        case 4:
-          colorWipe(random_color(),20); // Blue
-          break;
-        case 5:
-          theaterChase(strip.Color(127, 127, 127), 20); // White
-          break;
-        case 6:
-          theaterChase(strip.Color(127, 0, 0), 20); // Red
-          break;
-        case 7:
-          rainbow(3);
-          break;
-        case 8:
-          rainbowCycle(3);
-          break;
-        case 9:
-          theaterChaseRainbow(3);
-          break;       
-    }
-  } else {
-    Serial.println("RemoteXY not connected yet....");
-    delay(100);
-  } 
+void luci_off() {
+  strip.clear();
+  strip.show();
 }
 
 void RemoteXY_yield() {
@@ -113,11 +68,6 @@ void RemoteXY_yield() {
     if (last_select != RemoteXY.select_1)
       return;
   }
-}
-
-void luci_off() {
-  strip.clear();
-  strip.show();
 }
 
 void supercar(int wait) {
@@ -295,4 +245,45 @@ uint32_t Wheel(byte WheelPos) {
   }
   WheelPos -= 170;
   return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+}
+
+void loop() {
+    for(int i = 0; i< 50; i++)
+      RemoteXY_Handler (); 
+  
+      if (RemoteXY.connect_flag)
+        last_select = RemoteXY.select_1;
+    
+      switch(last_select) {        
+        case 0:
+          luci_off();
+          break;
+        case 1:
+          supercar(20);
+          break;
+        case 2:
+          onexone(20);
+          break;
+        case 3:
+          curtain(20);
+          break;
+        case 4:
+          colorWipe(random_color(),20); // Blue
+          break;
+        case 5:
+          theaterChase(strip.Color(127, 127, 127), 20); // White
+          break;
+        case 6:
+          theaterChase(strip.Color(127, 0, 0), 20); // Red
+          break;
+        case 7:
+          rainbow(3);
+          break;
+        case 8:
+          rainbowCycle(3);
+          break;
+        case 9:
+          theaterChaseRainbow(3);
+          break;       
+    } 
 }
