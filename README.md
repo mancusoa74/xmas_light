@@ -4,7 +4,7 @@ Simple RemoteXY application to control a WS2811 50 RGB Led strip with nodeMCU
 
 <br/>
 <center>
-![xmas light app](https://3.bp.blogspot.com/-luo4ML_ESRw/WhB355iAgEI/AAAAAAAAC-8/UCmlfRbmRbMylKlNuVhY6zgAb-k7MHuPACLcBGAs/s640/ui.JPG "xmas light app")
+<img src="https://3.bp.blogspot.com/-luo4ML_ESRw/WhB355iAgEI/AAAAAAAAC-8/UCmlfRbmRbMylKlNuVhY6zgAb-k7MHuPACLcBGAs/s640/ui.JPG" />
 </center>
 
 <br/>
